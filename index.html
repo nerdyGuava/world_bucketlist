@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Passport & Expedition Journal 🌍</title>
+  
+  <!-- Font Integration for Vintage Explorer Vibe -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- D3.js and TopoJSON Libraries for World Map -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- MAIN HEADER -->
+  <header class="app-header">
+    <div class="header-container">
+      <h1 class="app-title">World Passport 🛂</h1>
+      <p class="app-subtitle">Global Expeditions & Commemorative Visas</p>
+      
+      <!-- Progress Bar Container -->
+      <div class="progress-container">
+        <div class="progress-bar-bg">
+          <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
+        <span id="progressText" class="progress-text">0 / 195 Countries Visited</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="dashboard-container">
+
+    <!-- WORLD MAP SECTION -->
+    <section class="dashboard-section">
+      <div class="dashboard-card map-card">
+        <div class="card-header">
+          <h2>Interactive World Map</h2>
+          <div class="map-controls">
+            <button id="zoomInBtn" class="btn-icon" title="Zoom In">+</button>
+            <button id="zoomOutBtn" class="btn-icon" title="Zoom Out">−</button>
+            <button id="resetZoomBtn" class="btn-icon" title="Reset Map">↺</button>
+          </div>
+        </div>
+        <div class="map-wrapper">
+          <svg id="mapSvg"></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- PASSPORT STAMP COLLECTION SECTION -->
+    <section class="dashboard-section">
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h2>Custom Visa Stamps ✈️</h2>
+          <p class="card-subtitle">Commemorative stamps collected across the globe</p>
+        </div>
+        <div id="stampsGalleryGrid" class="stamps-grid">
+          <!-- JS will render stamps here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPEDITION BADGES & MILESTONES -->
+    <section class="dashboard-section">
+      <div class="dashboard-card">
+        <div class="card-header">
+          <h2>Global Badges & Milestones 🏆</h2>
+          <p class="card-subtitle">Special achievements unlocked along your travels</p>
+        </div>
+        <div id="badgeGrid" class="badge-grid">
+          <!-- JS will render badges here -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================
+       MODALS & OVERLAYS
+       ========================================================== -->
+
+  <!-- COUNTRY MEMORY DETAIL MODAL -->
+  <div id="modalOverlay" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <button id="modalClose" class="modal-close-btn">&times;</button>
+      <div id="modalContent">
+        <!-- JS populates country detail info & photo row -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN GALLERY LIGHTBOX -->
+  <div id="galleryOverlay" class="gallery-overlay" style="display: none;">
+    <button id="galleryClose" class="gallery-close-btn">&times;</button>
+    
+    <div class="gallery-container">
+      <img id="galleryImage" src="" alt="Full size photo preview">
+      
+      <div class="gallery-controls">
+        <button id="prevImgBtn" class="gallery-nav-btn">❮ Prev</button>
+        <span id="galleryCounter" class="gallery-counter">1 / 1</span>
+        <button id="nextImgBtn" class="gallery-nav-btn">Next ❯</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
