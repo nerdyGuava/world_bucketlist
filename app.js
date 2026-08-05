@@ -77,77 +77,117 @@
     renderBadges();
     renderStampsGallery();
   }
+
+  /* TopoJSON ISO 3166-1 & Alias Lookup */
+    // eslint-disable-next-line complexity
+    function getCountryData(d) {
+        // Convert ID to zero-padded 3-digit string (e.g., 840 -> "840", 392 -> "392")
+        const numericId = d.id ? String(d.id).padStart(3, '0') : null;
+        const name = d.properties ? d.properties.name : null;
+    
+        // --- UNITED STATES (840) ---
+        if (
+        numericId === "840" || 
+        name === "United States of America" || 
+        name === "United States" || 
+        name === "USA"
+        ) {
+        return countryMap["USA"] || countryMap["US"];
+        }
+    
+        // --- JAPAN (392) ---
+        if (numericId === "392" || name === "Japan") {
+        return countryMap["JP"] || countryMap["Japan"];
+        }
+    
+        // --- TAIWAN (158) ---
+        if (numericId === "158" || name === "Taiwan" || name === "Chinese Taipei") {
+        return countryMap["TW"] || countryMap["Taiwan"];
+        }
+    
+        // --- THAILAND (764) ---
+        if (numericId === "764" || name === "Thailand") {
+        return countryMap["TH"] || countryMap["Thailand"];
+        }
+    
+        // Fallback direct key match
+        if (countryMap[name]) return countryMap[name];
+        if (countryMap[numericId]) return countryMap[numericId];
+    
+        return null;
+    }
   
-  /* ==========================================================
+/* ==========================================================
      3. RENDER D3 WORLD MAP
      ========================================================== */
-  function initMap() {
-    const width = 960;
-    const height = 500;
-  
-    const svg = d3.select("#mapSvg")
-      .attr("viewBox", `0 0 ${width} ${height}`)
-      .attr("width", "100%")
-      .attr("height", "100%");
-  
-    const defs = svg.append("defs");
-    const gradient = defs.append("linearGradient")
-    .attr("id", "goldGradient")
-    .attr("x1", "0%").attr("y1", "0%")
-    .attr("x2", "100%").attr("y2", "100%");
+     function initMap() {
+        const width = 960;
+        const height = 500;
+      
+        const svg = d3.select("#mapSvg")
+          .attr("viewBox", `0 0 ${width} ${height}`)
+          .attr("width", "100%")
+          .attr("height", "100%");
+      
+        const defs = svg.append("defs");
+        const gradient = defs.append("linearGradient")
+          .attr("id", "goldGradient")
+          .attr("x1", "0%").attr("y1", "0%")
+          .attr("x2", "100%").attr("y2", "100%");
+        
+        gradient.append("stop").attr("offset", "0%").attr("stop-color", "#b8860b");
+        gradient.append("stop").attr("offset", "100%").attr("stop-color", "#d4af37");
     
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#b8860b");
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#d4af37");
-
-    const g = svg.append("g");
-  
-    // D3 Natural Earth Projection for Global View
-    const projection = d3.geoNaturalEarth1()
-      .scale(160)
-      .translate([width / 2, height / 2]);
-  
-    const path = d3.geoPath().projection(projection);
-  
-    // Zoom & Pan handler
-    const zoom = d3.zoom()
-      .scaleExtent([1, 8])
-      .on("zoom", (event) => g.attr("transform", event.transform));
-  
-    svg.call(zoom);
-  
-    // Load World Atlas TopoJSON
-    d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
-      .then(world => {
-        const countriesGeo = topojson.feature(world, world.objects.countries).features;
-  
-        g.selectAll("path")
-          .data(countriesGeo)
-          .enter()
-          .append("path")
-          .attr("d", path)
-          .attr("class", d => {
-            const countryData = countryMap[d.properties.name];
-            return `country ${countryData && countryData.visited ? 'visited' : ''}`;
+        const g = svg.append("g");
+      
+        // D3 Natural Earth Projection for Global View
+        const projection = d3.geoNaturalEarth1()
+          .scale(160)
+          .translate([width / 2, height / 2]);
+      
+        const path = d3.geoPath().projection(projection);
+      
+        // Zoom & Pan handler
+        const zoom = d3.zoom()
+          .scaleExtent([1, 8])
+          .on("zoom", (event) => g.attr("transform", event.transform));
+      
+        svg.call(zoom);
+      
+        // Load World Atlas TopoJSON
+        d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
+          .then(world => {
+            const countriesGeo = topojson.feature(world, world.objects.countries).features;
+      
+            g.selectAll("path")
+              .data(countriesGeo)
+              .enter()
+              .append("path")
+              .attr("d", path)
+              .attr("class", d => {
+                const countryData = getCountryData(d); // ✅ Call helper here
+                return `country ${countryData && countryData.visited ? 'visited' : ''}`;
+              })
+              .on("click", (event, d) => {
+                const countryData = getCountryData(d); // ✅ Call helper here
+                if (countryData && countryData.visited) {
+                  event.stopPropagation();
+                  openModal(countryData);
+                }
+              });
           })
-          .on("click", (event, d) => {
-            const countryData = countryMap[d.properties.name];
-            if (countryData && countryData.visited) {
-              openModal(countryData);
-            }
-          });
-      })
-      .catch(err => console.error("Error loading world topology:", err));
-  
-    // Controls
-    const zoomInBtn = document.getElementById('zoomInBtn');
-    const zoomOutBtn = document.getElementById('zoomOutBtn');
-    const resetZoomBtn = document.getElementById('resetZoomBtn');
-  
-    if (zoomInBtn) zoomInBtn.onclick = () => svg.transition().duration(300).call(zoom.scaleBy, 1.3);
-    if (zoomOutBtn) zoomOutBtn.onclick = () => svg.transition().duration(300).call(zoom.scaleBy, 0.7);
-    if (resetZoomBtn) resetZoomBtn.onclick = () => svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
-  }
-  
+          .catch(err => console.error("Error loading world topology:", err));
+      
+        // Controls
+        const zoomInBtn = document.getElementById('zoomInBtn');
+        const zoomOutBtn = document.getElementById('zoomOutBtn');
+        const resetZoomBtn = document.getElementById('resetZoomBtn');
+      
+        if (zoomInBtn) zoomInBtn.onclick = () => svg.transition().duration(300).call(zoom.scaleBy, 1.3);
+        if (zoomOutBtn) zoomOutBtn.onclick = () => svg.transition().duration(300).call(zoom.scaleBy, 0.7);
+        if (resetZoomBtn) resetZoomBtn.onclick = () => svg.transition().duration(300).call(zoom.transform, d3.zoomIdentity);
+      }
+
   /* ==========================================================
      4. PHOTO PREVIEWS & MODALS
      ========================================================== */
