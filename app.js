@@ -140,6 +140,16 @@
         if (numericId === "764" || name === "Thailand") {
           return countryMap["TH"] || countryMap["Thailand"];
         }
+
+        // --- DOMINICAN REPUBLIC (214) ---
+        if (numericId === "214" || name === "Dominican Rep." || name === "Dominican Republic") {
+            return countryMap["DO"] || countryMap["Dominican Republic"];
+        }
+
+        // --- BAHAMAS (044) ---
+        if (numericId === "044" || name === "Bahamas" || name === "The Bahamas") {
+            return countryMap["BS"] || countryMap["Bahamas"];
+  }
       
         // Fallback direct key match
         if (name && countryMap[name]) return countryMap[name];
