@@ -87,7 +87,7 @@
     
     gradient.append("stop").attr("offset", "0%").attr("stop-color", "#b8860b");
     gradient.append("stop").attr("offset", "100%").attr("stop-color", "#d4af37");
-    
+
     const g = svg.append("g");
   
     // D3 Natural Earth Projection for Global View
@@ -200,36 +200,257 @@
   /* ==========================================================
      5. GLOBAL BADGES DEFINITIONS
      ========================================================== */
-  const badgesData = [
+  /* ==========================================================
+   UPDATED EXPANDED BADGES DATA
+   ========================================================== */
+    /* ==========================================================
+   REGION DEFINITIONS FOR BADGE CHECKS
+   ========================================================== */
+    const REGIONS = {
+        asia: ["JP", "TW", "TH", "CN", "KR", "VN", "IN", "ID", "PH", "MY", "SG", "KH", "LA", "MM", "NP", "LK", "PK", "BD", "MN", "BT", "MV", "BN", "TL", "KZ", "UZ", "TM", "KG", "TJ", "AF", "IR", "IQ", "SA", "AE", "QA", "OM", "YE", "KW", "BH", "JO", "IL", "LB", "SY", "TR", "GE", "AM", "AZ", "CY"],
+        europe: ["FR", "DE", "IT", "ES", "GB", "NL", "BE", "CH", "AT", "PT", "GR", "IE", "SE", "NO", "DK", "FI", "PL", "CZ", "HU", "RO", "BG", "HR", "SI", "SK", "EE", "LV", "LT", "IS", "MT", "AL", "MK", "BA", "RS", "ME", "XK", "MD", "UA", "BY", "AD", "MC", "SM", "VA", "LI", "LU"],
+        africa: ["EG", "MA", "ZA", "KE", "TZ", "NG", "GH", "ET", "UG", "RW", "SN", "CI", "CM", "TN", "DZ", "LY", "SD", "AO", "MZ", "ZW", "NA", "BW", "ZM", "MG", "MU", "SC", "CV", "GM", "GN", "SL", "LR", "BF", "ML", "NE", "TD", "CF", "CG", "CD", "GA", "GQ", "ST", "DJ", "SO", "ER", "SS", "MW", "LS", "SZ", "KM", "BI", "TG", "BJ", "MR"],
+        northAmerica: ["US", "CA", "MX", "GT", "BZ", "SV", "HN", "NI", "CR", "PA"],
+        southAmerica: ["BR", "AR", "CL", "PE", "CO", "EC", "BO", "PY", "UY", "VE", "GY", "SR"],
+        oceania: ["AU", "NZ", "FJ", "PG", "VU", "SB", "WS", "TO"],
+        caribbean: ["AG", "BS", "BB", "CU", "DM", "DO", "GD", "HT", "JM", "KN", "LC", "VC", "TT"],
+        seAsia: ["TH", "VN", "ID", "MY", "SG", "PH", "KH", "LA", "MM", "BN", "TL"],
+        eastAsia: ["JP", "TW", "CN", "KR", "MN"],
+        mena: ["EG", "MA", "DZ", "TN", "LY", "SA", "AE", "QA", "OM", "YE", "KW", "BH", "JO", "IL", "LB", "SY", "IQ", "IR"]
+    };
+
+   const badgesData = [
+    // --- MILESTONES ---
     {
-      id: "first_stamp",
-      title: "First Passport Stamp",
-      icon: "🛂",
-      desc: "Cross your first international border!",
-      check: (visitedCodes) => visitedCodes.length >= 1
+        id: "first_stamp",
+        title: "Border Hopper",
+        icon: "🛂",
+        desc: "Cross your very first international border!",
+        check: (visitedCodes) => visitedCodes.length >= 1
     },
     {
-      id: "globe_trotter",
-      title: "Globe Trotter",
-      icon: "🌍",
-      desc: "Visit 5 different countries!",
-      check: (visitedCodes) => visitedCodes.length >= 5
+        id: "globetrotter_5",
+        title: "Stamp Collector",
+        icon: "🗺️",
+        desc: "Visit 5 different countries.",
+        check: (visitedCodes) => visitedCodes.length >= 5
     },
     {
-      id: "euro_tripper",
-      title: "European Voyager",
-      icon: "🏰",
-      desc: "Visit France, Germany, and Italy!",
-      check: (visitedCodes) => ["FR", "DE", "IT"].every(code => visitedCodes.includes(code))
+        id: "globetrotter_10",
+        title: "World Voyager",
+        icon: "✈️",
+        desc: "Visit 10 different countries.",
+        check: (visitedCodes) => visitedCodes.length >= 10
+    },
+
+    // --- CONTINENT & REGION COMPLETION ---
+    {
+        id: "all_asia",
+        title: "Asian Emperor",
+        icon: "🐉",
+        desc: "Visit all recognized countries in Asia (48/48)!",
+        check: (visitedCodes) => {
+        const asiaCodes = ["JP", "TW", "TH", "CN", "KR", "VN", "IN", "ID", "PH", "MY", "SG", "KH", "LA", "MM", "NP", "LK", "PK", "BD", "MN", "BT", "MV", "BN", "TL", "KZ", "UZ", "TM", "KG", "TJ", "AF", "IR", "IQ", "SA", "AE", "QA", "OM", "YE", "KW", "BH", "JO", "IL", "LB", "SY", "TR", "GE", "AM", "AZ", "CY"];
+        return asiaCodes.every(code => visitedCodes.includes(code));
+        }
     },
     {
-      id: "north_america",
-      title: "Americas Neighbor",
-      icon: "🌮",
-      desc: "Visit Canada and Mexico!",
-      check: (visitedCodes) => ["CA", "MX"].every(code => visitedCodes.includes(code))
-    }
-  ];
+        id: "all_europe",
+        title: "European Sovereign",
+        icon: "🏰",
+        desc: "Visit all recognized countries in Europe (44/44)!",
+        check: (visitedCodes) => {
+        const europeCodes = ["FR", "DE", "IT", "ES", "GB", "NL", "BE", "CH", "AT", "PT", "GR", "IE", "SE", "NO", "DK", "FI", "PL", "CZ", "HU", "RO", "BG", "HR", "SI", "SK", "EE", "LV", "LT", "IS", "MT", "AL", "MK", "BA", "RS", "ME", "XK", "MD", "UA", "BY", "AD", "MC", "SM", "VA", "LI", "LU"];
+        return europeCodes.every(code => visitedCodes.includes(code));
+        }
+    },
+    {
+        id: "all_africa",
+        title: "African Monarch",
+        icon: "🦁",
+        desc: "Visit all recognized countries in Africa (54/54)!",
+        check: (visitedCodes) => {
+        const africaCodes = ["EG", "MA", "ZA", "KE", "TZ", "NG", "GH", "ET", "UG", "RWA", "SN", "CI", "CM", "TN", "DZ", "LY", "SD", "AO", "MZ", "ZW", "NA", "BW", "ZM", "MG", "MU", "SC", "CV", "GM", "GN", "SL", "LR", "BF", "ML", "NE", "TD", "CF", "CG", "CD", "GA", "GQ", "ST", "DJ", "SO", "ER", "SS", "MW", "LS", "SZ", "KM", "BI", "TG", "BJ", "MR"];
+        return africaCodes.every(code => visitedCodes.includes(code));
+        }
+    },
+    {
+        id: "all_mena",
+        title: "Sultan of MENA",
+        icon: "🕌",
+        desc: "Visit all countries in the Middle East & North Africa!",
+        check: (visitedCodes) => {
+        const menaCodes = ["EG", "MA", "DZ", "TN", "LY", "SA", "AE", "QA", "OM", "YE", "KW", "BH", "JO", "IL", "LB", "SY", "IQ", "IR"];
+        return menaCodes.every(code => visitedCodes.includes(code));
+        }
+    },
+
+    // --- CONTINENT HOPPING ---
+    {
+        id: "taste_of_continents",
+        title: "Continent Sampler",
+        icon: "🧭",
+        desc: "Visit at least 1 country in every inhabited continent (Asia, Europe, Africa, North America, South America, Oceania)!",
+        check: (visitedCodes) => {
+        const continentGroups = {
+            asia: ["JP", "TW", "TH", "CN", "KR", "VN", "IN", "ID", "PH", "MY", "SG", "KH", "LA", "MM", "NP", "LK", "PK", "BD", "MN", "BT", "MV", "BN", "TL", "KZ", "UZ", "TM", "KG", "TJ", "AF", "IR", "IQ", "SA", "AE", "QA", "OM", "YE", "KW", "BH", "JO", "IL", "LB", "SY", "TR", "GE", "AM", "AZ", "CY"],
+            europe: ["FR", "DE", "IT", "ES", "GB", "NL", "BE", "CH", "AT", "PT", "GR", "IE", "SE", "NO", "DK", "FI", "PL", "CZ", "HU", "RO", "BG", "HR", "SI", "SK", "EE", "LV", "LT", "IS", "MT", "AL", "MK", "BA", "RS", "ME", "XK", "MD", "UA", "BY", "AD", "MC", "SM", "VA", "LI", "LU"],
+            africa: ["EG", "MA", "ZA", "KE", "TZ", "NG", "GH", "ET", "UG", "RW", "SN", "CI", "CM", "TN", "DZ", "LY", "SD", "AO", "MZ", "ZW", "NA", "BW", "ZM", "MG", "MU", "SC", "CV", "GM", "GN", "SL", "LR", "BF", "ML", "NE", "TD", "CF", "CG", "CD", "GA", "GQ", "ST", "DJ", "SO", "ER", "SS", "MW", "LS", "SZ", "KM", "BI", "TG", "BJ", "MR"],
+            northAmerica: ["US", "CA", "MX", "GT", "BZ", "SV", "HN", "NI", "CR", "PA", "CU", "JM", "HT", "DO", "BS", "BB", "TT"],
+            southAmerica: ["BR", "AR", "CL", "PE", "CO", "EC", "BO", "PY", "UY", "VE", "GY", "SR"],
+            oceania: ["AU", "NZ", "FJ", "PG", "VU", "SB", "WS", "TO"]
+        };
+
+        return Object.values(continentGroups).every(group => 
+            group.some(code => visitedCodes.includes(code))
+        );
+        }
+    },
+    {
+        id: "all_seven_continents",
+        title: "Apex Adventurer",
+        icon: "🧊",
+        desc: "Step foot on all 7 continents (including Antarctica)!",
+        check: (visitedCodes) => visitedCodes.includes("AQ") && 
+        // Re-uses sampler check logic requiring all other 6
+        ["JP", "FR", "EG", "US", "BR", "AU"].some(c => visitedCodes.includes(c))
+    },
+
+    // --- FUN REGIONAL & THEMATIC BADGES ---
+    {
+        id: "all_se_asia",
+        title: "Southeast Asia Sovereign",
+        icon: "🍜",
+        desc: "Visit all recognized countries in Southeast Asia (11/11)!",
+        check: (visitedCodes) => {
+          const seAsiaCodes = [
+            "TH", // Thailand
+            "VN", // Vietnam
+            "ID", // Indonesia
+            "MY", // Malaysia
+            "SG", // Singapore
+            "PH", // Philippines
+            "KH", // Cambodia
+            "LA", // Laos
+            "MM", // Myanmar
+            "BN", // Brunei
+            "TL"  // Timor-Leste
+          ];
+          return seAsiaCodes.every(code => visitedCodes.includes(code));
+        }
+      },
+      {
+        id: "east_asia_trio",
+        title: "Far East Express",
+        icon: "🗾",
+        desc: "Experience China, Japan, and South Korea!",
+        check: (visitedCodes) => ["CN", "JP", "KR"].every(code => visitedCodes.includes(code))
+      },
+    {
+        id: "island_hopper",
+        title: "Archipelago Explorer",
+        icon: "🏝️",
+        desc: "Visit 3 island nations (e.g. Japan, Taiwan, Philippines, Maldives)!",
+        check: (visitedCodes) => {
+        const islands = ["JP", "TW", "PH", "ID", "MV", "LK", "GB", "IE", "IS", "NZ", "FJ", "CU", "JM"];
+        return visitedCodes.filter(code => islands.includes(code)).length >= 3;
+        }
+    },
+    {
+        id: "all_caribbean",
+        title: "Caribbean Conqueror",
+        icon: "🏝️",
+        desc: "Visit all sovereign nations in the Caribbean (13/13)!",
+        check: (visitedCodes) => {
+          const caribbeanCodes = [
+            "AG", // Antigua and Barbuda
+            "BS", // Bahamas
+            "BB", // Barbados
+            "CU", // Cuba
+            "DM", // Dominica
+            "DO", // Dominican Republic
+            "GD", // Grenada
+            "HT", // Haiti
+            "JM", // Jamaica
+            "KN", // Saint Kitts and Nevis
+            "LC", // Saint Lucia
+            "VC", // Saint Vincent and the Grenadines
+            "TT"  // Trinidad and Tobago
+          ];
+          return caribbeanCodes.every(code => visitedCodes.includes(code));
+        }
+      },
+    {
+        id: "first_asia",
+        title: "Asian Trailblazer",
+        icon: "🌏",
+        desc: "Visit your very first country in Asia!",
+        check: (visitedCodes) => REGIONS.asia.some(code => visitedCodes.includes(code))
+    },
+    {
+        id: "first_europe",
+        title: "European Pioneer",
+        icon: "🌍",
+        desc: "Visit your very first country in Europe!",
+        check: (visitedCodes) => REGIONS.europe.some(code => visitedCodes.includes(code))
+    },
+    {
+        id: "first_africa",
+        title: "African Explorer",
+        icon: "🌍",
+        desc: "Visit your very first country in Africa!",
+        check: (visitedCodes) => REGIONS.africa.some(code => visitedCodes.includes(code))
+    },
+    {
+        id: "first_north_america",
+        title: "North American Rover",
+        icon: "🌎",
+        desc: "Visit your very first country in North America!",
+        check: (visitedCodes) => REGIONS.northAmerica.some(code => visitedCodes.includes(code))
+    },
+    {
+        id: "first_south_america",
+        title: "South American Scout",
+        icon: "🌎",
+        desc: "Visit your very first country in South America!",
+        check: (visitedCodes) => REGIONS.southAmerica.some(code => visitedCodes.includes(code))
+    },
+    {
+        id: "first_oceania",
+        title: "Oceania Voyager",
+        icon: "🌏",
+        desc: "Visit your very first country in Oceania!",
+        check: (visitedCodes) => REGIONS.oceania.some(code => visitedCodes.includes(code))
+    },
+    {
+        id: "first_se_asia",
+        title: "SE Asia Pioneer",
+        icon: "🍜",
+        desc: "Visit your very first country in Southeast Asia!",
+        check: (visitedCodes) => REGIONS.seAsia.some(code => visitedCodes.includes(code))
+    },
+    {
+        id: "first_east_asia",
+        title: "East Asia Pioneer",
+        icon: "⛩️",
+        desc: "Visit your very first country in East Asia!",
+        check: (visitedCodes) => REGIONS.eastAsia.some(code => visitedCodes.includes(code))
+    },
+    {
+        id: "first_caribbean",
+        title: "Caribbean Pioneer",
+        icon: "🏝️",
+        desc: "Visit your very first country in the Caribbean!",
+        check: (visitedCodes) => REGIONS.caribbean.some(code => visitedCodes.includes(code))
+    },
+    {
+        id: "first_mena",
+        title: "MENA Pioneer",
+        icon: "🕌",
+        desc: "Visit your very first country in Middle East & North Africa!",
+        check: (visitedCodes) => REGIONS.mena.some(code => visitedCodes.includes(code))
+    },
+    ];
   
   function renderBadges() {
     const badgeGrid = document.getElementById('badgeGrid');
