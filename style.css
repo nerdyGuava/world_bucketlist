@@ -181,13 +181,16 @@
   }
   
   .country.visited {
-    fill: url(#goldGradient);
-    stroke: var(--accent-gold);
-    stroke-width: 0.8px;
+    fill: var(--accent-gold);          /* Solid Metallic Gold Fill */
+    stroke: #ff70a6;                   /* Vibrant Pink Outline */
+    stroke-width: 1.5px;               /* Slightly thicker border so the pink stands out */
+    filter: drop-shadow(0 0 3px rgba(255, 112, 166, 0.4)); /* Subtle pink glow */
   }
   
   .country.visited:hover {
-    filter: brightness(1.2);
+    fill: var(--accent-gold-light);    /* Lighter gold highlight on hover */
+    stroke: #ff9ebb;                   /* Soft pastel pink on hover */
+    filter: drop-shadow(0 0 6px rgba(255, 112, 166, 0.8));
   }
   
   /* ==========================================================
