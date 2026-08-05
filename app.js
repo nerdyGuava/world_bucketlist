@@ -17,7 +17,7 @@
       stampImg: "photos/japan/stamps/japan_visa.png" 
     },
     {
-        code: "USA",
+        code: "US",
         name: "United States",
         visited: true,
         icon: "🇺🇸",
