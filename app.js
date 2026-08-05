@@ -88,13 +88,14 @@
   
     // Add Gold Gradient Definition for Visited Countries
     const defs = svg.append("defs");
+    // Replace the gold gradient stops in initMap() with this:
     const gradient = defs.append("linearGradient")
-      .attr("id", "goldGradient")
-      .attr("x1", "0%").attr("y1", "0%")
-      .attr("x2", "100%").attr("y2", "100%");
-  
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#b8860b");
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#d4af37");
+    .attr("id", "terracottaGradient")
+    .attr("x1", "0%").attr("y1", "0%")
+    .attr("x2", "100%").attr("y2", "100%");
+
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#c86d51");
+    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#d99b38");
   
     const g = svg.append("g");
   
