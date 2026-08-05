@@ -17,15 +17,43 @@
       stampImg: "photos/japan/stamps/japan_visa.png" 
     },
     {
+        code: "DO",
+        name: "Dominican Republic",
+        visited: true,
+        date: "Visited",
+        icon: "🏝️",
+        memory: "Sailing on Virgin Voyages with delicious food, fun activities, awesome shows, and late-night karaoke! Loved roaming around town seeing all the cool sights, even if we missed out on trying that empanada.",
+        images: [
+          "photos/do/puerto_plata.jpg",
+          "photos/do/sightseeing.jpg"
+        ],
+        stampImg: "photos/do/stamps/dr_visa.png"
+      },
+      {
+        code: "BS",
+        name: "Bahamas",
+        visited: true,
+        date: "Visited",
+        icon: "🇧🇸",
+        memory: "Stopping at Bimini on Virgin Voyages — enjoying delicious food, insane amout of alcahol, fun ship activities, killer shows, workout classes, and singing karaoke!",
+        images: [
+          "photos/bs/bimini.jpg",
+          "photos/bs/beach.jpg"
+        ],
+        stampImg: "photos/bs/stamps/bahamas_visa.png"
+      },
+    {
         code: "US",
         name: "United States",
         visited: true,
+        date: "Visited",
         icon: "🇺🇸",
         memory: "Our homebase — where we met, fell in love, and started taking on the world together.",
         images: [
           "photos/us/tokyo.jpg",
           "photos/us/tokyo.jpg"
-        ]
+        ],
+        stampImg: "photos/us/stamps/bahamas_visa.png"
       },
     { 
       code: "TW", 
@@ -119,7 +147,7 @@
       
         return null;
       }
-        
+
 /* ==========================================================
      3. RENDER D3 WORLD MAP
      ========================================================== */
