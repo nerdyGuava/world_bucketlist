@@ -56,8 +56,12 @@
   ];
   
   /* Map lookup object for quick country access by name */
-  const countryMap = {};
-  countriesData.forEach(c => countryMap[c.name] = c);
+  /* Map lookup object for quick country access by name AND code */
+    const countryMap = {};
+    countriesData.forEach(c => {
+    countryMap[c.code] = c;
+    countryMap[c.name] = c;
+    });
   
   /* ==========================================================
      2. INITIALIZE PROGRESS BAR & STAMPS
@@ -81,42 +85,41 @@
   /* TopoJSON ISO 3166-1 & Alias Lookup */
     // eslint-disable-next-line complexity
     function getCountryData(d) {
-        // Convert ID to zero-padded 3-digit string (e.g., 840 -> "840", 392 -> "392")
         const numericId = d.id ? String(d.id).padStart(3, '0') : null;
         const name = d.properties ? d.properties.name : null;
-    
+      
         // --- UNITED STATES (840) ---
         if (
-        numericId === "840" || 
-        name === "United States of America" || 
-        name === "United States" || 
-        name === "USA"
+          numericId === "840" || 
+          name === "United States of America" || 
+          name === "United States" || 
+          name === "USA"
         ) {
-        return countryMap["USA"] || countryMap["US"];
+          return countryMap["US"] || countryMap["United States"];
         }
-    
+      
         // --- JAPAN (392) ---
         if (numericId === "392" || name === "Japan") {
-        return countryMap["JP"] || countryMap["Japan"];
+          return countryMap["JP"] || countryMap["Japan"];
         }
-    
+      
         // --- TAIWAN (158) ---
         if (numericId === "158" || name === "Taiwan" || name === "Chinese Taipei") {
-        return countryMap["TW"] || countryMap["Taiwan"];
+          return countryMap["TW"] || countryMap["Taiwan"];
         }
-    
+      
         // --- THAILAND (764) ---
         if (numericId === "764" || name === "Thailand") {
-        return countryMap["TH"] || countryMap["Thailand"];
+          return countryMap["TH"] || countryMap["Thailand"];
         }
-    
+      
         // Fallback direct key match
-        if (countryMap[name]) return countryMap[name];
-        if (countryMap[numericId]) return countryMap[numericId];
-    
+        if (name && countryMap[name]) return countryMap[name];
+        if (numericId && countryMap[numericId]) return countryMap[numericId];
+      
         return null;
-    }
-  
+      }
+        
 /* ==========================================================
      3. RENDER D3 WORLD MAP
      ========================================================== */
