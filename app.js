@@ -450,6 +450,55 @@
         desc: "Visit your very first country in Middle East & North Africa!",
         check: (visitedCodes) => REGIONS.mena.some(code => visitedCodes.includes(code))
     },
+    {
+        id: "globetrotter_15",
+        title: "Seasoned Explorer",
+        icon: "🧭",
+        desc: "Visit 15 different countries.",
+        check: (visitedCodes) => visitedCodes.length >= 15
+    },
+    {
+        id: "globetrotter_25",
+        title: "Quarter-Century Navigator",
+        icon: "🗺️",
+        desc: "Visit 25 different countries.",
+        check: (visitedCodes) => visitedCodes.length >= 25
+    },
+    {
+        id: "globetrotter_50",
+        title: "Half-Centurion Voyager",
+        icon: "🥇",
+        desc: "Visit 50 different countries!",
+        check: (visitedCodes) => visitedCodes.length >= 50
+    },
+    {
+        id: "globetrotter_75",
+        title: "Global Wanderer",
+        icon: "🌐",
+        desc: "Visit 75 different countries!",
+        check: (visitedCodes) => visitedCodes.length >= 75
+    },
+    {
+        id: "globetrotter_100",
+        title: "Century Club Member",
+        icon: "💯",
+        desc: "Join the elite Century Club by visiting 100 countries!",
+        check: (visitedCodes) => visitedCodes.length >= 100
+    },
+    {
+        id: "globetrotter_150",
+        title: "Ultimate Odyssey",
+        icon: "🌟",
+        desc: "Visit 150 different countries!",
+        check: (visitedCodes) => visitedCodes.length >= 150
+    },
+    {
+        id: "all_countries_world",
+        title: "Master of the Earth",
+        icon: "👑",
+        desc: "Visit every single recognized country on Earth (195/195)!",
+        check: (visitedCodes) => visitedCodes.length >= 195
+    }
     ];
   
   function renderBadges() {
