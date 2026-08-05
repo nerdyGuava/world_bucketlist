@@ -86,16 +86,15 @@
       .attr("width", "100%")
       .attr("height", "100%");
   
-    // Add Gold Gradient Definition for Visited Countries
+    // Add Whimsical Gradient Definition for Visited Countries
     const defs = svg.append("defs");
-    // Replace the gold gradient stops in initMap() with this:
     const gradient = defs.append("linearGradient")
-    .attr("id", "terracottaGradient")
+    .attr("id", "visitedGradient")
     .attr("x1", "0%").attr("y1", "0%")
     .attr("x2", "100%").attr("y2", "100%");
 
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#c86d51");
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#d99b38");
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#ff70a6");  /* Bubblegum Pink */
+    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#ffd670"); /* Sunny Yellow */
   
     const g = svg.append("g");
   
