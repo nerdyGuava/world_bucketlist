@@ -16,6 +16,17 @@
       ], 
       stampImg: "photos/japan/stamps/japan_visa.png" 
     },
+    {
+        code: "US",
+        name: "United States",
+        visited: true,
+        icon: "🇺🇸",
+        memory: "Our homebase — where we met, fell in love, and started taking on the world together.",
+        images: [
+          "photos/us/tokyo.jpg",
+          "photos/us/tokyo.jpg"
+        ]
+      },
     { 
       code: "TW", 
       name: "Taiwan", 
