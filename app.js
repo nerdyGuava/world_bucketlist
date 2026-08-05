@@ -6,49 +6,42 @@
       code: "JP", 
       name: "Japan", 
       visited: true, 
-      date: "Spring 2025", 
-      icon: "⛩️", 
-      memory: "Cherry blossoms in Tokyo, incredible ramen in Kyoto, and exploring bamboo groves!", 
+      date: "Visited", 
+      icon: "🚅", 
+      memory: "Riding the Shinkansen, the awesome Ryokan in Yufuin, soaking in the hot springs at Beppu, and hanging out with Riko San in Tokyo!", 
       images: [
         "photos/japan/tokyo.jpg",
-        "photos/japan/kyoto.jpg"
+        "photos/japan/yufuin.jpg",
+        "photos/japan/beppu.jpg"
       ], 
       stampImg: "photos/japan/stamps/japan_visa.png" 
     },
     { 
-      code: "FR", 
-      name: "France", 
+      code: "TW", 
+      name: "Taiwan", 
       visited: true, 
-      date: "Autumn 2024", 
-      icon: "🥐", 
-      memory: "Eiffel tower sparkles at night, endless fresh baguettes, and art at the Louvre.", 
+      date: "Visited", 
+      icon: "🧋", 
+      memory: "Pi Eve's fun wedding, all the delicious food, seeing Char's Dad be a slide, and ridiculously good tea and boba!", 
       images: [
-        "photos/france/paris.jpg"
+        "photos/taiwan/wedding.jpg",
+        "photos/taiwan/boba.jpg"
       ], 
-      stampImg: "photos/france/stamps/france_visa.png" 
+      stampImg: "photos/taiwan/stamps/taiwan_visa.png" 
     },
     { 
-      code: "MX", 
-      name: "Mexico", 
+      code: "TH", 
+      name: "Thailand", 
       visited: true, 
-      date: "Winter 2023", 
-      icon: "🌮", 
-      memory: "Street tacos in Mexico City and ancient pyramids at Teotihuacan!", 
+      date: "Visited", 
+      icon: "🌶️", 
+      memory: "Visiting family, eating delicious spicy food, and having fancy hotel fun by the beaches!", 
       images: [
-        "photos/mexico/cdmx.jpg"
+        "photos/thailand/family.jpg",
+        "photos/thailand/beach.jpg"
       ], 
-      stampImg: "photos/mexico/stamps/mexico_visa.png" 
-    },
-    { code: "CA", name: "Canada", visited: false },
-    { code: "GB", name: "United Kingdom", visited: false },
-    { code: "IT", name: "Italy", visited: false },
-    { code: "DE", name: "Germany", visited: false },
-    { code: "ES", name: "Spain", visited: false },
-    { code: "AU", name: "Australia", visited: false },
-    { code: "BR", name: "Brazil", visited: false },
-    { code: "EG", name: "Egypt", visited: false },
-    { code: "IS", name: "Iceland", visited: false }
-    // Add more countries as your travels expand!
+      stampImg: "photos/thailand/stamps/thailand_visa.png" 
+    }
   ];
   
   /* Map lookup object for quick country access by name */
