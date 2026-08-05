@@ -86,16 +86,17 @@
       .attr("width", "100%")
       .attr("height", "100%");
   
-    // Add Whimsical Gradient Definition for Visited Countries
+    // Gradient Definition for Visited Lands (Purple to Mint Green with Pink Highlights)
     const defs = svg.append("defs");
     const gradient = defs.append("linearGradient")
-    .attr("id", "visitedGradient")
+    .attr("id", "purpleGreenGradient")
     .attr("x1", "0%").attr("y1", "0%")
     .attr("x2", "100%").attr("y2", "100%");
 
-    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#ff70a6");  /* Bubblegum Pink */
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#ffd670"); /* Sunny Yellow */
-  
+    gradient.append("stop").attr("offset", "0%").attr("stop-color", "#7b2cbf");   /* Deep Purple */
+    gradient.append("stop").attr("offset", "50%").attr("stop-color", "#ffc6ff");  /* Pastel Pink */
+    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#2a9d8f"); /* Fresh Mint Green */
+
     const g = svg.append("g");
   
     // D3 Natural Earth Projection for Global View
